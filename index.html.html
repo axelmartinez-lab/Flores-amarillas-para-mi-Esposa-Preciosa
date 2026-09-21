@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Para ti, preciosa 💕</title>
+
+  <!-- Meta etiquetas Open Graph para vista previa en WhatsApp -->
+  <meta property="og:title" content="Una sorpresa para ti 🌼">
+  <meta property="og:description" content="Alguien preparó algo especial para ti...">
+  <meta property="og:type" content="website">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fffde7 0%, #fff9c4 50%, #fff59d 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      color: #5d4037;
+    }
+
+    /* Contenedor de elementos flotantes */
+    .bg-animation {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .floating-item {
+      position: absolute;
+      top: -10%;
+      animation: fall linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Tarjetas principales */
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 24px;
+      padding: 24px 20px;
+      width: 90%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(251, 192, 45, 0.25), 0 4px 10px rgba(0,0,0,0.05);
+      border: 2px solid #fff59d;
+      z-index: 2;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: absolute;
+    }
+
+    .hidden {
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .visible {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: #f57f17;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #6d4c41;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      background: linear-gradient(45deg, #fbc02d, #fdd835);
+      color: #4e342e;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(251, 192, 45, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Ilustración Pompompurin */
+    .character-container {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 15px auto;
+      position: relative;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Botón de Música */
+    .music-btn {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 2px solid #fbc02d;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      cursor: pointer;
+      font-size: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #f57f17;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Control de Música -->
+  <button class="music-btn" id="musicToggle">🎵</button>
+  <audio id="bgMusic" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Efectos de fondo -->
+  <div class="bg-animation" id="bgAnimation"></div>
+
+  <!-- Pantalla 1: Inicio -->
+  <div class="card visible" id="step1">
+    <div style="font-size: 40px; margin-bottom: 10px;">✨🌻✨</div>
+    <h1>Tengo una sorpresita para ti...</h1>
+    <p>Toca el botón para abrirla</p>
+    <button class="btn" onclick="goToStep(2)">Para ti 💛</button>
+  </div>
+
+  <!-- Pantalla 2: Sorpresa Principal -->
+  <div class="card hidden" id="step2">
+    <!-- SVG de Pompompurin con Flores -->
+    <div class="character-container">
+      <svg viewBox="0 0 200 200" width="100%" height="100%">
+        <!-- Cuerpo de Pompompurin -->
+        <ellipse cx="100" cy="120" rx="55" ry="45" fill="#FFF59D"/>
+        <!-- Cabeza -->
+        <ellipse cx="100" cy="90" rx="50" ry="40" fill="#FFF59D"/>
+        <!-- Orejas -->
+        <ellipse cx="55" cy="95" rx="12" ry="22" fill="#FFF59D" transform="rotate(20 55 95)"/>
+        <ellipse cx="145" cy="95" rx="12" ry="22" fill="#FFF59D" transform="rotate(-20 145 95)"/>
+        <!-- Gorrito/Boina -->
+        <ellipse cx="100" cy="52" rx="20" ry="8" fill="#5D4037"/>
+        <ellipse cx="100" cy="48" rx="6" ry="4" fill="#5D4037"/>
+        <!-- Ojos y Nariz -->
+        <circle cx="85" cy="88" r="3.5" fill="#5D4037"/>
+        <circle cx="115" cy="88" r="3.5" fill="#5D4037"/>
+        <ellipse cx="100" cy="93" rx="4" ry="3" fill="#5D4037"/>
+        <!-- Boca -->
+        <path d="M 96 96 Q 100 99 104 96" stroke="#5D4037" stroke-width="2" fill="none"/>
+        <!-- Mejillas -->
+        <ellipse cx="75" cy="95" rx="6" ry="4" fill="#FFAB91" opacity="0.6"/>
+        <ellipse cx="125" cy="95" rx="6" ry="4" fill="#FFAB91" opacity="0.6"/>
+        <!-- Brazos sosteniendo flores -->
+        <ellipse cx="70" cy="120" rx="8" ry="15" fill="#FFF59D" transform="rotate(-30 70 120)"/>
+        <ellipse cx="130" cy="120" rx="8" ry="15" fill="#FFF59D" transform="rotate(30 130 120)"/>
+
+        <!-- RAMO DE FLORES AMARILLAS -->
+        <!-- Envoltura del ramo -->
+        <polygon points="85,145 115,145 125,115 75,115" fill="#FFF" stroke="#FFE082" stroke-width="2"/>
+        <path d="M 85 125 L 115 125" stroke="#FFB300" stroke-width="3"/>
+        
+        <!-- Girasol central -->
+        <circle cx="100" cy="110" r="14" fill="#FFA000"/>
+        <circle cx="100" cy="110" r="7" fill="#5D4037"/>
+        
+        <!-- Margaritas y Tulipanes alrededor -->
+        <circle cx="82" cy="105" r="8" fill="#FFEE58"/>
+        <circle cx="82" cy="105" r="4" fill="#F57F17"/>
+        
+        <circle cx="118" cy="105" r="8" fill="#FFEE58"/>
+        <circle cx="118" cy="105" r="4" fill="#F57F17"/>
+        
+        <!-- Tulipán superior -->
+        <path d="M 95 90 Q 100 82 105 90 Q 100 98 95 90 Z" fill="#FDD835"/>
+      </svg>
+    </div>
+
+    <!-- PERSONALIZA AQUÍ TU MENSAJE -->
+    <div id="custom-message">
+      <h1>Para ti, preciosa 💛</h1>
+      <p>Porque quería regalarte un poquito de felicidad, unas flores y recordarte cuánto te amo.</p>
+      <p class="highlight">Te amo muchísimo.</p>
+    </div>
+
+    <button class="btn" onclick="goToStep(3)">Una última sorpresa ✨</button>
+  </div>
+
+  <!-- Pantalla 3: Final -->
+  <div class="card hidden" id="step3">
+    <div style="font-size: 50px; margin-bottom: 10px;">🌻🥳🌻</div>
+    <h1>Espero que estas flores te saquen una sonrisa</h1>
+    <p class="highlight" style="font-size: 1.2rem; margin-top: 15px;">Te amo, preciosa. ❤️</p>
+  </div>
+
+  <script>
+    // Generar flores y corazones cayendo
+    const items = ['🌻', '🌼', '🌷', '💛', '✨', '🌸'];
+    const bgAnimation = document.getElementById('bgAnimation');
+
+    function createFloatingItem() {
+      const item = document.createElement('div');
+      item.classList.add('floating-item');
+      item.innerText = items[Math.floor(Math.random() * items.length)];
+      item.style.left = Math.random() * 100 + 'vw';
+      item.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      item.style.fontSize = (Math.random() * 12 + 16) + 'px';
+      bgAnimation.appendChild(item);
+
+      setTimeout(() => {
+        item.remove();
+      }, 6000);
+    }
+
+    setInterval(createFloatingItem, 300);
+
+    // Navegación entre pasos
+    function goToStep(stepNumber) {
+      document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('visible');
+        card.classList.add('hidden');
+      });
+
+      const nextStep = document.getElementById('step' + stepNumber);
+      nextStep.classList.remove('hidden');
+      nextStep.classList.add('visible');
+
+      // Intentar reproducir música al hacer primer clic
+      if (stepNumber === 2) {
+        playAudio();
+      }
+    }
+
+    // Control de Audio
+    const music = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicToggle');
+    let isPlaying = false;
+
+    function playAudio() {
+      music.play().then(() => {
+        isPlaying = true;
+        musicBtn.innerText = '🔊';
+      }).catch(() => {
+        // Reproducción bloqueada por navegador
+        isPlaying = false;
+        musicBtn.innerText = '🎵';
+      });
+    }
+
+    musicBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        music.pause();
+        musicBtn.innerText = '🎵';
+        isPlaying = false;
+      } else {
+        playAudio();
+      }
+    });
+  </script>
+</body>
+</html>
